@@ -3,6 +3,7 @@
  import routesQuestion from '../routes/question';
  import routesCareer from '../routes/career';
  import routesAnswer from '../routes/answer';
+ import routesSesion from '../routes/sesion';
 import sequelize from '../db/connection';
 import  { Answer, Career, Question, User }  from './user';
 
@@ -32,6 +33,7 @@ import  { Answer, Career, Question, User }  from './user';
         this.app.use('/api/career', routesCareer);
         this.app.use('/api/question', routesQuestion);
         this.app.use('/api/users', routesUser);
+        this.app.use('/api/sesion', routesSesion);
         
     }
 
