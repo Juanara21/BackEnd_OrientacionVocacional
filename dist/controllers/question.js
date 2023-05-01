@@ -41,7 +41,14 @@ const newQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.newQuestion = newQuestion;
 const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const questions = yield user_1.Question.findAll();
+        const questions = yield user_1.Question.findAll({
+            include: [
+                {
+                    model: user_1.Career,
+                    attributes: ['career'] // selecciona las columnas que quieres mostrar de la tabla Question
+                }
+            ]
+        });
         res.json({ questions });
     }
     catch (error) {

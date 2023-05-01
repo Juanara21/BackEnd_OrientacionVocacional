@@ -43,7 +43,15 @@ export const newQuestion = async (req: Request, res: Response) => {
 };
 export const getAllQuestions = async (req: Request, res: Response) => {
     try {
-        const questions = await Question.findAll();
+        const questions = await Question.findAll({
+
+            include: [
+                {
+                    model: Career,
+                    attributes: ['career'] // selecciona las columnas que quieres mostrar de la tabla Question
+                  }
+              ]
+        });
         res.json({ questions });
     } catch (error) {
         res.status(400).json({
