@@ -47,7 +47,11 @@ export const User = sequelize.define('User', {
     sexo: {
         type: DataTypes.STRING,
         allowNull: false
-    },  
+    },
+    rol: {
+      type: DataTypes.STRING,
+      defaultValue: 'user',
+    }, 
        
     })
     export const Career = sequelize.define('Career', {

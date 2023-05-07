@@ -18,6 +18,7 @@ const question_1 = __importDefault(require("../routes/question"));
 const career_1 = __importDefault(require("../routes/career"));
 const answer_1 = __importDefault(require("../routes/answer"));
 const sesion_1 = __importDefault(require("../routes/sesion"));
+const cors_1 = __importDefault(require("cors"));
 const user_2 = require("./user");
 class Server {
     constructor() {
@@ -42,6 +43,7 @@ class Server {
     }
     midlewaires() {
         this.app.use(express_1.default.json());
+        this.app.use((0, cors_1.default)());
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {

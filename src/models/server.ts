@@ -5,6 +5,7 @@
  import routesAnswer from '../routes/answer';
  import routesSesion from '../routes/sesion';
 import sequelize from '../db/connection';
+import  cors  from "cors";
 import  { Answer, Career, Question, User }  from './user';
 
 
@@ -39,6 +40,8 @@ import  { Answer, Career, Question, User }  from './user';
 
     midlewaires(){
         this.app.use(express.json());
+
+        this.app.use(cors());
     }
 
     async dbConnect(){

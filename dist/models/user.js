@@ -52,6 +52,10 @@ exports.User = connection_1.default.define('User', {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
+    rol: {
+        type: sequelize_1.DataTypes.STRING,
+        defaultValue: 'user',
+    },
 });
 exports.Career = connection_1.default.define('Career', {
     id: {
