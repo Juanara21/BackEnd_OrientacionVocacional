@@ -47,7 +47,7 @@ export const getAllAnswer = async (req: Request, res: Response) => {
               ]
 
         });
-        res.json({ answer });
+        res.json(answer);
     } catch (error) {
         res.status(400).json({
             msg: 'Ups! Ocurrió un error al obtener las respuestas',

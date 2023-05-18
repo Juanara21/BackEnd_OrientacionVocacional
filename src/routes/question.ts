@@ -9,7 +9,7 @@ const router = Router();
 router.post("/", valide_token, verify_rol("admin"), newQuestion);
 
 // Ruta para actualizar una pregunta existente
-router.put("/:id", valide_token, verify_rol("admin"), updateQuestion);
+router.patch("/:id", valide_token, verify_rol("admin"), updateQuestion);
 
 // Ruta para eliminar una pregunta existente
 router.delete("/:id", valide_token, verify_rol("admin"), deleteQuestion);

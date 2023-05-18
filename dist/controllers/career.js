@@ -41,7 +41,7 @@ exports.newCareer = newCareer;
 const getAllCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const career = yield user_1.Career.findAll();
-        res.json({ career });
+        res.json(career);
     }
     catch (error) {
         res.status(400).json({

@@ -49,7 +49,7 @@ const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function
                 }
             ]
         });
-        res.json({ questions });
+        res.json(questions);
     }
     catch (error) {
         res.status(400).json({
@@ -63,13 +63,16 @@ const updateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const { id } = req.params;
     const { descripcion, CareerId } = req.body;
     try {
-        const questionexistente = yield user_1.Question.findOne({ where: { descripcion: descripcion } });
         const question = yield user_1.Question.findOne({ where: { id: id } });
         if (!question) {
             return res.status(404).json({ msg: 'Pregunta no encontrada' });
         }
-        if (questionexistente) {
-            return res.status(404).json({ msg: 'Pregunta ya existente' });
+        const verificarquestion = question.dataValues.descripcion;
+        if (descripcion && descripcion !== verificarquestion) {
+            const questionExistente = yield user_1.Question.findOne({ where: { descripcion: descripcion } });
+            if (questionExistente) {
+                return res.status(400).json({ msg: 'Pregunta ya existente' });
+            }
         }
         yield question.update({
             descripcion: descripcion,

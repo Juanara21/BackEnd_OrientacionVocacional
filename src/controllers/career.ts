@@ -43,7 +43,7 @@ export const newCareer = async (req: Request, res: Response) => {
 export const getAllCareer = async (req: Request, res: Response) => {
     try {
         const career = await Career.findAll();
-        res.json({ career });
+        res.json(career);
     } catch (error) {
         res.status(400).json({
             msg: 'Ups! Ocurrió un error al obtener las carreras',

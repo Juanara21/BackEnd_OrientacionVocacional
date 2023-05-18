@@ -47,7 +47,7 @@ const getAllAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 }
             ]
         });
-        res.json({ answer });
+        res.json(answer);
     }
     catch (error) {
         res.status(400).json({

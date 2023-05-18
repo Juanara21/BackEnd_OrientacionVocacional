@@ -52,7 +52,7 @@ export const getAllQuestions = async (req: Request, res: Response) => {
                   }
               ]
         });
-        res.json({ questions });
+        res.json( questions );
     } catch (error) {
         res.status(400).json({
             msg: 'Ups! Ocurrió un error al obtener las preguntas',
@@ -65,14 +65,20 @@ export const updateQuestion = async (req: Request, res: Response) => {
     const { descripcion, CareerId } = req.body;
 
     try {
-        const questionexistente = await Question.findOne({ where: { descripcion:descripcion } });
-        const question = await Question.findOne({ where: { id:id } });
-        if (!question) {
-            return res.status(404).json({ msg: 'Pregunta no encontrada' });
-        }
-        if (questionexistente) {
-            return res.status(404).json({ msg: 'Pregunta ya existente' });
-        }
+        
+            const question = await Question.findOne({ where: { id: id } });
+            if (!question) {
+              return res.status(404).json({ msg: 'Pregunta no encontrada' });
+            }
+            const verificarquestion = question.dataValues.descripcion;
+            
+            
+            if (descripcion && descripcion !== verificarquestion) {
+              const questionExistente = await Question.findOne({ where: { descripcion: descripcion } });
+              if (questionExistente) {
+                return res.status(400).json({ msg: 'Pregunta ya existente' });
+              }
+            }
         await question.update({ 
             descripcion: descripcion,
             CareerId: CareerId
