@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changePassword = exports.deleteUser = exports.updateUser = exports.getAllUser = exports.loginUser = exports.newUser = void 0;
+exports.changePassword = exports.deleteUser = exports.updateUser = exports.getUserByUsername = exports.getAllUser = exports.loginUser = exports.newUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const user_1 = require("../models/user");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -107,6 +107,28 @@ const getAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getAllUser = getAllUser;
+const getUserByUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { username } = req.params;
+    try {
+        const user = yield user_1.User.findOne({
+            where: { username },
+            attributes: {
+                exclude: ['password']
+            }
+        });
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.json(user);
+    }
+    catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener el usuario',
+            error
+        });
+    }
+});
+exports.getUserByUsername = getUserByUsername;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username } = req.params;
     const { primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, tipo_identificacion, identificacion, sexo } = req.body;

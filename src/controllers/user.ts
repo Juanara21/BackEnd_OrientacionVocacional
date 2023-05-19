@@ -120,6 +120,33 @@ export const getAllUser = async (req: Request, res: Response) => {
       });
     }
 }
+
+export const getUserByUsername = async (req: Request, res: Response) => {
+  const { username } = req.params;
+  
+  try {
+    const user = await User.findOne({
+      where: { username },
+      attributes: {
+        exclude: ['password']
+      }
+    });
+  
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  
+    res.json(user);
+  
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error al obtener el usuario',
+      error
+    });
+  }
+};
+
+
 export const updateUser = async (req: Request, res: Response) => {
     const { username } = req.params;
     const {primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, tipo_identificacion, identificacion, sexo } = req.body;    
