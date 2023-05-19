@@ -242,7 +242,7 @@ export const changePassword = async (req: Request, res: Response) => {
       const passwordValid = await bcrypt.compare(oldPassword, user.password);
       if (!passwordValid) {
         return res.status(400).json({
-          msg: 'La contraseña anterior no es válida',
+          msg: 'La contraseña ingresada no es válida',
         });
       }
   

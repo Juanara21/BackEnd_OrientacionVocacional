@@ -214,7 +214,7 @@ const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const passwordValid = yield bcrypt_1.default.compare(oldPassword, user.password);
         if (!passwordValid) {
             return res.status(400).json({
-                msg: 'La contraseña anterior no es válida',
+                msg: 'La contraseña ingresada no es válida',
             });
         }
         // Generar una nueva contraseña hash
