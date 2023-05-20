@@ -155,28 +155,39 @@ export const updateUser = async (req: Request, res: Response) => {
     try {
         // Verificar si existe el usuario
         const user = await User.findOne({ where: { username: username } })
-        const documento = await User.findOne({ where: { identificacion: identificacion}})
-        const valemail = await User.findOne({ where: { email: email}})
+       
+       
         if (!user) {
             return res.status(400).json({
                 msg: `No existe el usuario registrado con el nombre ${username} en la base de datos`
             })
         }
-        
-        if (documento) {
-            return res.status(400).json({
-                msg: `El documento ${identificacion} ya existe`
-            })
+        const verificaruser = user.dataValues.identificacion;
             
-        }
-        if (valemail) {
-            return res.status(400).json({
-                msg: `El email ${email} ya existe`
-            })
             
-        }
+            if (identificacion && identificacion !== verificaruser) {
+              const documento = await User.findOne({ where: { identificacion: identificacion}})
+              if (documento) {
+              return res.status(400).json({
+                  msg: `El documento ${identificacion} ya existe`
+              })            
+              }
+            }
 
-        // Actualizar campos del usuario
+         const verificaremail = user.dataValues.email;
+            
+            
+            if (email && email !== verificaremail) {
+              const valemail = await User.findOne({ where: { email: email}})
+              if (valemail) {
+                return res.status(400).json({
+                    msg: `El email ${email} ya existe`
+                })
+                
+            }
+            }   
+        
+  // Actualizar campos del usuario
         await user.update({
            
             primer_nombre: primer_nombre,

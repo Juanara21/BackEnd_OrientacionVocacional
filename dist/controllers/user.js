@@ -135,22 +135,28 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         // Verificar si existe el usuario
         const user = yield user_1.User.findOne({ where: { username: username } });
-        const documento = yield user_1.User.findOne({ where: { identificacion: identificacion } });
-        const valemail = yield user_1.User.findOne({ where: { email: email } });
         if (!user) {
             return res.status(400).json({
                 msg: `No existe el usuario registrado con el nombre ${username} en la base de datos`
             });
         }
-        if (documento) {
-            return res.status(400).json({
-                msg: `El documento ${identificacion} ya existe`
-            });
+        const verificaruser = user.dataValues.identificacion;
+        if (identificacion && identificacion !== verificaruser) {
+            const documento = yield user_1.User.findOne({ where: { identificacion: identificacion } });
+            if (documento) {
+                return res.status(400).json({
+                    msg: `El documento ${identificacion} ya existe`
+                });
+            }
         }
-        if (valemail) {
-            return res.status(400).json({
-                msg: `El email ${email} ya existe`
-            });
+        const verificaremail = user.dataValues.email;
+        if (email && email !== verificaremail) {
+            const valemail = yield user_1.User.findOne({ where: { email: email } });
+            if (valemail) {
+                return res.status(400).json({
+                    msg: `El email ${email} ya existe`
+                });
+            }
         }
         // Actualizar campos del usuario
         yield user.update({
