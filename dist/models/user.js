@@ -45,7 +45,7 @@ exports.User = connection_1.default.define('User', {
         allowNull: false
     },
     identificacion: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.BIGINT,
         allowNull: false
     },
     sexo: {

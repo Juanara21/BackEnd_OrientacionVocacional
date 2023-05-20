@@ -41,7 +41,7 @@ export const User = sequelize.define('User', {
         allowNull: false
     }, 
     identificacion: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false
     },
     sexo: {
