@@ -18,6 +18,7 @@ const question_1 = __importDefault(require("../routes/question"));
 const career_1 = __importDefault(require("../routes/career"));
 const answer_1 = __importDefault(require("../routes/answer"));
 const sesion_1 = __importDefault(require("../routes/sesion"));
+const reportesUser_1 = __importDefault(require("../routes/reportesUser"));
 const cors_1 = __importDefault(require("cors"));
 const user_2 = require("./user");
 class Server {
@@ -40,6 +41,7 @@ class Server {
         this.app.use('/api/question', question_1.default);
         this.app.use('/api/users', user_1.default);
         this.app.use('/api/sesion', sesion_1.default);
+        this.app.use('/api/reportes', reportesUser_1.default);
     }
     midlewaires() {
         this.app.use(express_1.default.json());
