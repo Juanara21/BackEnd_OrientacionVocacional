@@ -12,11 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAnswer = exports.updateAnswer = exports.getAllAnswer = exports.newAnswer = void 0;
 const user_1 = require("../models/user");
 const newAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { answer, UserId, QuestionId } = req.body;
+    const { valor, UserId, QuestionId } = req.body;
     try {
         // creacion correcta
         yield user_1.Answer.create({
-            valor: answer,
+            valor: valor,
             UserId: UserId,
             QuestionId: QuestionId
         });
@@ -27,7 +27,7 @@ const newAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         // error
         res.status(400).json({
-            msg: 'Ups! Ocurrio un error al agregar la respuesta',
+            msg: 'Ups! Ocurrio un error al agregar la respuesta, comuniquese con el administrador',
             error
         });
     }

@@ -91,12 +91,13 @@ export const loginUser = async (req: Request, res: Response) => {
             msg: 'Contraseña incorrecta'
         })
     }
-
+    const id = user.id;
     const rol = user.rol;
     // generamos token
     const token = jwt.sign({
         username: username,
-        rol: rol
+        rol: rol,
+        id: id
        
     },process.env.SECRET_KEY || 'admin')
 

@@ -81,11 +81,13 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: 'Contraseña incorrecta'
         });
     }
+    const id = user.id;
     const rol = user.rol;
     // generamos token
     const token = jsonwebtoken_1.default.sign({
         username: username,
-        rol: rol
+        rol: rol,
+        id: id
     }, process.env.SECRET_KEY || 'admin');
     res.json(token);
 });

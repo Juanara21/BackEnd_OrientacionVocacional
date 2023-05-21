@@ -3,14 +3,14 @@ import { Answer, Question, User } from '../models/user';
 
 export const newAnswer = async (req: Request, res: Response) => {
 
-    const { answer, UserId, QuestionId } = req.body;
+    const { valor, UserId, QuestionId } = req.body;
 
    
     try {
 
         // creacion correcta
         await Answer.create({
-            valor: answer,
+            valor: valor,
             UserId: UserId,
             QuestionId: QuestionId
 
@@ -24,7 +24,7 @@ export const newAnswer = async (req: Request, res: Response) => {
 
         // error
        res.status(400).json({
-        msg: 'Ups! Ocurrio un error al agregar la respuesta',
+        msg: 'Ups! Ocurrio un error al agregar la respuesta, comuniquese con el administrador',
         error
        }) 
     }
