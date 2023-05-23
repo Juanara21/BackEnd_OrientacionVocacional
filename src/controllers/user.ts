@@ -8,6 +8,32 @@ export const newUser = async(req: Request, res: Response) => {
     const { username, password, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, tipo_identificacion, identificacion, sexo } = req.body;    
 
     // verificar si exite el usuario
+    if (username.includes(' ')) {
+      return res.status(400).json({
+        msg: 'El nombre de usuario no puede contener espacios'
+      });
+    }
+  
+    // Verificar que la identificacion tenga exactamente 10 digitos
+    if (identificacion.toString().length !== 10) {
+      return res.status(400).json({
+        msg: 'El número de identificación debe tener 10 dígitos'
+      });
+    }
+  
+    // Verificar el formato del email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        msg: 'El correo electrónico no tiene un formato válido, Ej: Orientacion@developer.com'
+      });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        msg: 'La contraseña debe tener al menos 8 caracteres'
+      });
+    }
 
     const user = await User.findOne({ where: { username: username}})
     const documento = await User.findOne({ where: { identificacion: identificacion}})
