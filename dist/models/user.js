@@ -101,5 +101,3 @@ exports.Answer.belongsTo(exports.User, { foreignKey: 'UserId' });
 exports.User.hasMany(exports.Answer, { foreignKey: 'UserId' });
 exports.Answer.belongsTo(exports.Question, { foreignKey: 'QuestionId' });
 exports.Question.hasMany(exports.Answer, { foreignKey: 'QuestionId' });
-exports.Question.belongsTo(exports.User, { foreignKey: 'UserId' });
-exports.User.hasMany(exports.Question, { foreignKey: 'UserId' });
