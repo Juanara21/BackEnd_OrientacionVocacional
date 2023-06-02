@@ -14,11 +14,11 @@ console.log(DB_HOST, DB_NAME, DB_PASSWORD, DB_NAME);
 const sequelize = new sequelize_1.Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
     dialect: 'mysql',
-    // dialectOptions: {
-    //     ssl: {
-    //       rejectUnauthorized: true
-    //     }
-    //   }
+    dialectOptions: {
+        ssl: {
+            rejectUnauthorized: true
+        }
+    }
 });
 exports.default = sequelize;
 // require('dotenv').config()
