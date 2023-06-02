@@ -5,7 +5,7 @@
  import routesAnswer from '../routes/answer';
  import routesSesion from '../routes/sesion';
  import routesReporte from '../routes/reportesUser';
-import sequelize from '../db/connection';
+
 import  cors  from "cors";
 import  { Answer, Career, Question, User }  from './user';
 
