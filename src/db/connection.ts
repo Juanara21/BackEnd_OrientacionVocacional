@@ -11,11 +11,11 @@ console.log(DB_HOST,DB_NAME,DB_PASSWORD,DB_NAME )
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
     dialect: 'mysql',
-    dialectOptions: {
-        ssl: {
-          rejectUnauthorized: true
-        }
-      }
+    // dialectOptions: {
+    //     ssl: {
+    //       rejectUnauthorized: true
+    //     }
+    //   }
   });
   
 
