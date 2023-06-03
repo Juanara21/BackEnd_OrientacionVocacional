@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.changePassword = exports.deleteUser = exports.updateUser = exports.getUserByUsername = exports.getAllUser = exports.loginUser = exports.newUser = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const user_1 = require("../models/user");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -60,7 +60,7 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             msg: `El email ${email} ya existe`
         });
     }
-    const hastedpassword = yield bcrypt_1.default.hash(password, 10);
+    const hastedpassword = yield bcryptjs_1.default.hash(password, 10);
     try {
         // creacion correcta
         yield user_1.User.create({
@@ -98,7 +98,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     // validamos password
-    const passwordvalid = yield bcrypt_1.default.compare(password, user.password);
+    const passwordvalid = yield bcryptjs_1.default.compare(password, user.password);
     if (!passwordvalid) {
         return res.status(400).json({
             msg: 'Contraseña incorrecta'
@@ -242,14 +242,14 @@ const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
             });
         }
         // Verificar la contraseña anterior
-        const passwordValid = yield bcrypt_1.default.compare(oldPassword, user.password);
+        const passwordValid = yield bcryptjs_1.default.compare(oldPassword, user.password);
         if (!passwordValid) {
             return res.status(400).json({
                 msg: 'La contraseña ingresada no es válida',
             });
         }
         // Generar una nueva contraseña hash
-        const hashedPassword = yield bcrypt_1.default.hash(newPassword, 10);
+        const hashedPassword = yield bcryptjs_1.default.hash(newPassword, 10);
         // Actualizar la contraseña del usuario
         yield user.update({
             password: hashedPassword,
