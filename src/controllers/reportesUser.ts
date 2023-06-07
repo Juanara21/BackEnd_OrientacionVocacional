@@ -5,11 +5,11 @@ import { Request, Response } from 'express';
 export const getUsers = async (req: Request, res: Response) => {
   try {
     const query = `
-    SELECT u.id AS usuario_id, u.primer_nombre, u.primer_apellido, c.career AS carrera, SUM(r.valor) AS afinidad
-    FROM users u
-    INNER JOIN answers r ON u.id = r.UserId
-    INNER JOIN questions q ON r.QuestionId = q.id
-    INNER JOIN careers c ON q.CareerId = c.id
+    SELECT u.id AS usuario_id, u.primer_nombre, u.primer_apellido, c.career AS  Carrera, SUM(r.valor) AS afinidad
+    FROM Users u
+    INNER JOIN Answers r ON u.id = r.UserId
+    INNER JOIN Questions q ON r.QuestionId = q.id
+    INNER JOIN Careers c ON q.CareerId = c.id
     GROUP BY u.id, c.id
     ORDER BY u.id, afinidad DESC;
     `;
