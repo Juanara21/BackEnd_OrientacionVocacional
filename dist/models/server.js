@@ -45,7 +45,7 @@ class Server {
     }
     midlewaires() {
         this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)({ origin: '*' }));
+        this.app.use((0, cors_1.default)({ origin: 'front-end-orientacion-vocacional.vercel.app' }));
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
