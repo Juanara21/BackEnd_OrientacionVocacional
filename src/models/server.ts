@@ -44,7 +44,7 @@ import  { Answer, Career, Question, User }  from './user';
         this.app.use(express.json());
 
         this.app.use(cors(
-            { origin: 'http://localhost:4200'}
+            { origin: '*'}
         ));
     }
 
