@@ -45,7 +45,7 @@ class Server {
     }
     midlewaires() {
         this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)());
+        this.app.use((0, cors_1.default)({ origin: 'http://localhost:4200' }));
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
