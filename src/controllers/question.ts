@@ -67,6 +67,7 @@ export const updateQuestion = async (req: Request, res: Response) => {
     try {
         
             const question = await Question.findOne({ where: { id: id } });
+           
             if (!question) {
               return res.status(404).json({ msg: 'Pregunta no encontrada' });
             }
