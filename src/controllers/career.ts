@@ -8,11 +8,11 @@ export const newCareer = async (req: Request, res: Response) => {
     
     // verificar si exite el usuario
 
-    const careera = await Career.findOne({ where: { career: career}})
+    const careera = await Career.findOne({ where: { career: career.career}})
 
     if (careera) {
         return res.status(400).json({
-            msg: `La carrera ${career} ya existe`
+            msg: `La carrera ${career.career} ya existe`
         })
         
     }

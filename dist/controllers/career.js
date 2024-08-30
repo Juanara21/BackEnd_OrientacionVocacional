@@ -14,10 +14,10 @@ const career_1 = require("../models/career");
 const newCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const career = req.body;
     // verificar si exite el usuario
-    const careera = yield career_1.Career.findOne({ where: { career: career } });
+    const careera = yield career_1.Career.findOne({ where: { career: career.career } });
     if (careera) {
         return res.status(400).json({
-            msg: `La carrera ${career} ya existe`
+            msg: `La carrera ${career.career} ya existe`
         });
     }
     try {
