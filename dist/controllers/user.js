@@ -17,66 +17,66 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const user_1 = require("../models/user");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, password, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, email, tipo_identificacion, identificacion, sexo } = req.body;
+    const newUser = req.body;
     // verificar si exite el usuario
-    if (username.includes(' ')) {
+    if (newUser.username.includes(' ')) {
         return res.status(400).json({
             msg: 'El nombre de usuario no puede contener espacios'
         });
     }
     // Verificar que la identificacion tenga exactamente 10 digitos
-    if (identificacion.toString().length !== 10) {
+    if (newUser.identificacion.toString().length !== 10) {
         return res.status(400).json({
             msg: 'El número de identificación debe tener 10 dígitos'
         });
     }
     // Verificar el formato del email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(newUser.email)) {
         return res.status(400).json({
             msg: 'El correo electrónico no tiene un formato válido, Ej: Orientacion@developer.com'
         });
     }
-    if (password.length < 8) {
+    if (newUser.password.length < 8) {
         return res.status(400).json({
             msg: 'La contraseña debe tener al menos 8 caracteres'
         });
     }
-    const user = yield user_1.User.findOne({ where: { username: username } });
-    const documento = yield user_1.User.findOne({ where: { identificacion: identificacion } });
-    const valemail = yield user_1.User.findOne({ where: { email: email } });
+    const user = yield user_1.User.findOne({ where: { username: newUser.username } });
+    const documento = yield user_1.User.findOne({ where: { identificacion: newUser.identificacion } });
+    const valemail = yield user_1.User.findOne({ where: { email: newUser.email } });
     if (user) {
         return res.status(400).json({
-            msg: `El usuario ${username} ya existe`
+            msg: `El usuario ${newUser.username} ya existe`
         });
     }
     if (documento) {
         return res.status(400).json({
-            msg: `El documento ${identificacion} ya existe`
+            msg: `El documento ${newUser.identificacion} ya existe`
         });
     }
     if (valemail) {
         return res.status(400).json({
-            msg: `El email ${email} ya existe`
+            msg: `El email ${newUser.email} ya existe`
         });
     }
-    const hastedpassword = yield bcryptjs_1.default.hash(password, 10);
+    const hastedpassword = yield bcryptjs_1.default.hash(newUser.password, 10);
     try {
         // creacion correcta
         yield user_1.User.create({
-            username: username,
+            username: newUser.username,
             password: hastedpassword,
-            primer_nombre: primer_nombre,
-            segundo_nombre: segundo_nombre,
-            primer_apellido: primer_apellido,
-            segundo_apellido: segundo_apellido,
-            email: email,
-            tipo_identificacion: tipo_identificacion,
-            identificacion: identificacion,
-            sexo: sexo
+            primer_nombre: newUser.primer_nombre,
+            segundo_nombre: newUser.segundo_nombre,
+            primer_apellido: newUser.primer_apellido,
+            segundo_apellido: newUser.segundo_apellido,
+            email: newUser.email,
+            tipo_identificacion: newUser.tipo_identificacion,
+            identificacion: newUser.identificacion,
+            sexo: newUser.sexo
         });
         res.json({
-            msg: `Usuario ${username} creado exitosamentes`
+            msg: `Usuario ${newUser.username} creado exitosamentes`
         });
     }
     catch (error) {
