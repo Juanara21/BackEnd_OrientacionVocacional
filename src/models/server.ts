@@ -7,7 +7,7 @@
  import routesReporte from '../routes/reportesUser';
 
 import  cors  from "cors";
-import  { Answer, Career, Question, User }  from './user';
+import  { Answer, Career, Question, User }  from './associations';
 
 
  class Server{

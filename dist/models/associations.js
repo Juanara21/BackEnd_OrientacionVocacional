@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Answer = exports.Question = exports.Career = exports.User = void 0;
+const user_1 = require("./user");
+Object.defineProperty(exports, "User", { enumerable: true, get: function () { return user_1.User; } });
+const career_1 = require("./career");
+Object.defineProperty(exports, "Career", { enumerable: true, get: function () { return career_1.Career; } });
+const question_1 = require("./question");
+Object.defineProperty(exports, "Question", { enumerable: true, get: function () { return question_1.Question; } });
+const answer_1 = require("./answer");
+Object.defineProperty(exports, "Answer", { enumerable: true, get: function () { return answer_1.Answer; } });
+// Relación entre Question y Career
+question_1.Question.belongsTo(career_1.Career);
+career_1.Career.hasMany(question_1.Question);
+question_1.Question.belongsTo(career_1.Career, { foreignKey: 'CareerId' });
+career_1.Career.hasMany(question_1.Question, { foreignKey: 'CareerId' });
+answer_1.Answer.belongsTo(user_1.User, { foreignKey: 'UserId' });
+user_1.User.hasMany(answer_1.Answer, { foreignKey: 'UserId' });
+answer_1.Answer.belongsTo(question_1.Question, { foreignKey: 'QuestionId' });
+question_1.Question.hasMany(answer_1.Answer, { foreignKey: 'QuestionId' });

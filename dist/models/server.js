@@ -20,7 +20,7 @@ const answer_1 = __importDefault(require("../routes/answer"));
 const sesion_1 = __importDefault(require("../routes/sesion"));
 const reportesUser_1 = __importDefault(require("../routes/reportesUser"));
 const cors_1 = __importDefault(require("cors"));
-const user_2 = require("./user");
+const associations_1 = require("./associations");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -52,10 +52,10 @@ class Server {
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield user_2.Career.sync();
-                yield user_2.User.sync();
-                yield user_2.Question.sync();
-                yield user_2.Answer.sync();
+                yield associations_1.Career.sync();
+                yield associations_1.User.sync();
+                yield associations_1.Question.sync();
+                yield associations_1.Answer.sync();
             }
             catch (error) {
                 console.log('Problem connecting to the database ', error);

@@ -1,6 +1,22 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db/connection';
 
+export interface IUser {
+  id?: number; // La propiedad `id` es opcional ya que es autogenerada.
+  username: string;
+  password: string;
+  primer_nombre: string;
+  segundo_nombre: string;
+  primer_apellido: string;
+  segundo_apellido: string;
+  email: string;
+  tipo_identificacion: string;
+  identificacion: number;
+  sexo: string;
+  rol?: string; // `rol` es opcional y tiene un valor por defecto.
+}
+
+
 export const User = sequelize.define('User', {
     id: { 
         type: DataTypes.INTEGER,
@@ -54,59 +70,6 @@ export const User = sequelize.define('User', {
     }, 
        
     })
-    export const Career = sequelize.define('Career', {
-        id: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-          primaryKey: true
-        },
-        career: {
-          type: DataTypes.STRING(255),
-          allowNull: false
-        }
-      });
-      
-      // Definir el modelo de Preguntas
-      export const Question = sequelize.define('Question', {
-        id: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-          primaryKey: true
-        },
-        descripcion: {
-          type: DataTypes.STRING(255),
-          allowNull: false
-        }
-      });
-      
-      // Definir el modelo de Respuestas
-      export const Answer = sequelize.define('Answer', {
-        id: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-          primaryKey: true
-        },
-        valor: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        }
-      });
-      
-      // Establecer las relaciones entre los modelos
-         
-      Question.belongsTo(Career);
-      Career.hasMany(Question);
-      
-      Question.belongsTo(Career, { foreignKey: 'CareerId' });
-      Career.hasMany(Question, { foreignKey: 'CareerId' });
-      
-      Answer.belongsTo(User, { foreignKey: 'UserId' });
-      User.hasMany(Answer, { foreignKey: 'UserId' });
 
-      Answer.belongsTo(Question, { foreignKey: 'QuestionId' });
-      Question.hasMany(Answer, { foreignKey: 'QuestionId' });
-
-
-      
 
     
