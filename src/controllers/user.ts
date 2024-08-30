@@ -318,7 +318,7 @@ export  const createDefaultUser = async () => {
       await sequelize.sync(); // Asegúrate de que la base de datos esté sincronizada
   
       // Verifica si ya existe el usuario por defecto
-      const userExists = await User.findOne({ where: { identificacion: 99999 } });
+      const userExists = await User.findOne({ where: { rol: 'admin' } });
 
       const hastedpassword = await bcrypt.hash("defaultPassword",10);
   
@@ -332,7 +332,7 @@ export  const createDefaultUser = async () => {
           primer_apellido: 'Administration',
           segundo_apellido: 'User',
           email: 'Administrationuser@example.com',
-          tipo_identificacion: 'DNI',
+          tipo_identificacion: 'Cédula',
           identificacion: 99999,
           sexo: 'M',
           rol: 'admin', 

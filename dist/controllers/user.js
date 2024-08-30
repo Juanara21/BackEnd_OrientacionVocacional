@@ -275,7 +275,7 @@ const createDefaultUser = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield connection_1.default.sync(); // Asegúrate de que la base de datos esté sincronizada
         // Verifica si ya existe el usuario por defecto
-        const userExists = yield user_1.User.findOne({ where: { identificacion: 99999 } });
+        const userExists = yield user_1.User.findOne({ where: { rol: 'admin' } });
         const hastedpassword = yield bcryptjs_1.default.hash("defaultPassword", 10);
         if (!userExists) {
             // Crea el usuario por defecto
@@ -287,7 +287,7 @@ const createDefaultUser = () => __awaiter(void 0, void 0, void 0, function* () {
                 primer_apellido: 'Administration',
                 segundo_apellido: 'User',
                 email: 'Administrationuser@example.com',
-                tipo_identificacion: 'DNI',
+                tipo_identificacion: 'Cédula',
                 identificacion: 99999,
                 sexo: 'M',
                 rol: 'admin',
