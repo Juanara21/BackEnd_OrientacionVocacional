@@ -11,14 +11,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAnswer = exports.updateAnswer = exports.getAllAnswer = exports.newAnswer = void 0;
 const user_1 = require("../models/user");
+const answer_1 = require("../models/answer");
+const question_1 = require("../models/question");
 const newAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { valor, UserId, QuestionId } = req.body;
+    const answerData = req.body;
     try {
         // creacion correcta
-        yield user_1.Answer.create({
-            valor: valor,
-            UserId: UserId,
-            QuestionId: QuestionId
+        yield answer_1.Answer.create({
+            valor: answerData.valor,
+            UserId: answerData.UserId,
+            QuestionId: answerData.QuestionId
         });
         res.json({
             msg: `Respuesta agregada correctamente`
@@ -35,14 +37,14 @@ const newAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.newAnswer = newAnswer;
 const getAllAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const answer = yield user_1.Answer.findAll({
+        const answer = yield answer_1.Answer.findAll({
             include: [
                 {
                     model: user_1.User,
                     attributes: ['username'] // selecciona las columnas que quieres mostrar de la tabla Question
                 },
                 {
-                    model: user_1.Question,
+                    model: question_1.Question,
                     attributes: ['descripcion'] // selecciona las columnas que quieres mostrar de la tabla Question
                 }
             ]
@@ -61,7 +63,7 @@ const updateAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const { id } = req.params;
     const { answer } = req.body;
     try {
-        const respuesta = yield user_1.Answer.findOne({ where: { id: id } });
+        const respuesta = yield answer_1.Answer.findOne({ where: { id: id } });
         if (!respuesta) {
             return res.status(404).json({ msg: 'Respuesta no encontrada' });
         }
@@ -84,7 +86,7 @@ exports.updateAnswer = updateAnswer;
 const deleteAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const respuesta = yield user_1.Answer.findByPk(id);
+        const respuesta = yield answer_1.Answer.findByPk(id);
         if (!respuesta) {
             return res.status(404).json({ msg: 'Respuesta no encontrada' });
         }

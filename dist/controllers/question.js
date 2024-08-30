@@ -10,21 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteQuestion = exports.updateQuestion = exports.getAllQuestions = exports.newQuestion = void 0;
-const user_1 = require("../models/user");
+const career_1 = require("../models/career");
+const question_1 = require("../models/question");
 const newQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { descripcion, CareerId } = req.body;
+    const newQuestion = req.body;
     // verificar si exite el usuario
-    const question = yield user_1.Question.findOne({ where: { descripcion: descripcion } });
+    const question = yield question_1.Question.findOne({ where: { descripcion: newQuestion.descripcion } });
     if (question) {
         return res.status(400).json({
-            msg: `La pregunta ${descripcion} ya existe`
+            msg: `La pregunta ${newQuestion.descripcion} ya existe`
         });
     }
     try {
         // creacion correcta
-        yield user_1.Question.create({
-            descripcion: descripcion,
-            CareerId: CareerId
+        yield question_1.Question.create({
+            descripcion: newQuestion.descripcion,
+            CareerId: newQuestion.CareerId
         });
         res.json({
             msg: `Pregunta creada exitosamentes`
@@ -41,10 +42,10 @@ const newQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.newQuestion = newQuestion;
 const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const questions = yield user_1.Question.findAll({
+        const questions = yield question_1.Question.findAll({
             include: [
                 {
-                    model: user_1.Career,
+                    model: career_1.Career,
                     attributes: ['career'] // selecciona las columnas que quieres mostrar de la tabla Question
                 }
             ]
@@ -63,13 +64,13 @@ const updateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const { id } = req.params;
     const { descripcion, CareerId } = req.body;
     try {
-        const question = yield user_1.Question.findOne({ where: { id: id } });
+        const question = yield question_1.Question.findOne({ where: { id: id } });
         if (!question) {
             return res.status(404).json({ msg: 'Pregunta no encontrada' });
         }
         const verificarquestion = question.dataValues.descripcion;
         if (descripcion && descripcion !== verificarquestion) {
-            const questionExistente = yield user_1.Question.findOne({ where: { descripcion: descripcion } });
+            const questionExistente = yield question_1.Question.findOne({ where: { descripcion: descripcion } });
             if (questionExistente) {
                 return res.status(400).json({ msg: 'Pregunta ya existente' });
             }
@@ -94,7 +95,7 @@ exports.updateQuestion = updateQuestion;
 const deleteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const question = yield user_1.Question.findByPk(id);
+        const question = yield question_1.Question.findByPk(id);
         if (!question) {
             return res.status(404).json({ msg: 'Pregunta no encontrada' });
         }

@@ -1,18 +1,21 @@
 import { Request, Response } from "express";
-import { Answer, Question, User } from '../models/user';
+import { User } from '../models/user';
+import { Answer, IAnswer } from "../models/answer";
+import { Question } from "../models/question";
 
 export const newAnswer = async (req: Request, res: Response) => {
 
-    const { valor, UserId, QuestionId } = req.body;
+  
+    const answerData: IAnswer = req.body;
 
    
     try {
 
         // creacion correcta
         await Answer.create({
-            valor: valor,
-            UserId: UserId,
-            QuestionId: QuestionId
+            valor: answerData.valor,
+            UserId: answerData.UserId,
+            QuestionId: answerData.QuestionId
 
         })
        

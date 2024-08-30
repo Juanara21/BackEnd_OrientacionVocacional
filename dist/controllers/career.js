@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCareer = exports.updateCareer = exports.getAllCareer = exports.newCareer = void 0;
-const user_1 = require("../models/user");
+const career_1 = require("../models/career");
 const newCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { career } = req.body;
+    const career = req.body;
     // verificar si exite el usuario
-    const careera = yield user_1.Career.findOne({ where: { career: career } });
+    const careera = yield career_1.Career.findOne({ where: { career: career } });
     if (careera) {
         return res.status(400).json({
             msg: `La carrera ${career} ya existe`
@@ -22,8 +22,8 @@ const newCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     try {
         // creacion correcta
-        yield user_1.Career.create({
-            career: career
+        yield career_1.Career.create({
+            career: career.career
         });
         res.json({
             msg: `Carrera agregada exitosamentes`
@@ -40,7 +40,7 @@ const newCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.newCareer = newCareer;
 const getAllCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const career = yield user_1.Career.findAll();
+        const career = yield career_1.Career.findAll();
         res.json(career);
     }
     catch (error) {
@@ -55,8 +55,8 @@ const updateCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const { id } = req.params;
     const { career } = req.body;
     try {
-        const careera = yield user_1.Career.findOne({ where: { id: id } });
-        const careerexistente = yield user_1.Career.findOne({ where: { career: career } });
+        const careera = yield career_1.Career.findOne({ where: { id: id } });
+        const careerexistente = yield career_1.Career.findOne({ where: { career: career } });
         if (!careera) {
             return res.status(404).json({ msg: 'Carrera no encontrada' });
         }
@@ -82,7 +82,7 @@ exports.updateCareer = updateCareer;
 const deleteCareer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const career = yield user_1.Career.findByPk(id);
+        const career = yield career_1.Career.findByPk(id);
         if (!career) {
             return res.status(404).json({ msg: 'Carrera no encontrada' });
         }

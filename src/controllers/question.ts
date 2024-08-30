@@ -1,18 +1,19 @@
 import { Request, Response } from "express";
-import { Question, Career } from '../models/user';
+import { Career } from '../models/career';
+import { IQuestion, Question } from '../models/question';
 
 export const newQuestion = async (req: Request, res: Response) => {
 
-    const { descripcion, CareerId } = req.body;
-
+    
+    const newQuestion: IQuestion = req.body;
     
     // verificar si exite el usuario
 
-    const question = await Question.findOne({ where: { descripcion: descripcion}})
+    const question = await Question.findOne({ where: { descripcion: newQuestion.descripcion}})
 
     if (question) {
         return res.status(400).json({
-            msg: `La pregunta ${descripcion} ya existe`
+            msg: `La pregunta ${newQuestion.descripcion} ya existe`
         })
         
     }
@@ -21,8 +22,8 @@ export const newQuestion = async (req: Request, res: Response) => {
 
         // creacion correcta
         await Question.create({
-            descripcion: descripcion,
-            CareerId: CareerId
+            descripcion: newQuestion.descripcion,
+            CareerId: newQuestion.CareerId
 
         })
        

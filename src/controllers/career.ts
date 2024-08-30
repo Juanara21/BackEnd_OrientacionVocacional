@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { Career } from '../models/user';
+import { Career, ICareer } from '../models/career';
 
 export const newCareer = async (req: Request, res: Response) => {
 
-    const { career } = req.body;
+    const  career: ICareer = req.body;
 
     
     // verificar si exite el usuario
@@ -21,7 +21,7 @@ export const newCareer = async (req: Request, res: Response) => {
 
         // creacion correcta
         await Career.create({
-            career: career
+            career: career.career
 
         })
        
