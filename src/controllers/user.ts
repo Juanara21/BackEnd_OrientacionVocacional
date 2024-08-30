@@ -325,23 +325,21 @@ export  const createDefaultUser = async () => {
       if (!userExists) {
         // Crea el usuario por defecto
         await User.create({
-          username: 'defaultUser',
+          username: 'Administration',
           password: hastedpassword, 
-          primer_nombre: 'Default',
+          primer_nombre: 'Administration',
           segundo_nombre: 'User',
-          primer_apellido: 'Default',
+          primer_apellido: 'Administration',
           segundo_apellido: 'User',
-          email: 'defaultuser@example.com',
+          email: 'Administrationuser@example.com',
           tipo_identificacion: 'DNI',
           identificacion: 99999,
           sexo: 'M',
           rol: 'admin', 
         });
   
-        console.log('Usuario por defecto creado exitosamente.');
-      } else {
-        console.log('El usuario por defecto ya existe.');
-      }
+        
+      } 
     } catch (error) {
       console.error('Error al crear el usuario por defecto:', error);
     }
