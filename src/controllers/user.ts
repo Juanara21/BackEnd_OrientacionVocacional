@@ -120,12 +120,21 @@ export const loginUser = async (req: Request, res: Response) => {
     const id = user.id;
     const rol = user.rol;
     // generamos token
+
+    const secretKey = process.env.SECRET_KEY;
+
+    if (!secretKey) {
+        throw new Error("La clave secreta (SECRET_KEY) no está definida en el entorno");
+    }
+
     const token = jwt.sign({
         username: username,
         rol: rol,
         id: id
        
-    },process.env.SECRET_KEY || 'admin')
+    },secretKey,
+    { expiresIn: '1h' }
+  );
 
     res.json(token)
 

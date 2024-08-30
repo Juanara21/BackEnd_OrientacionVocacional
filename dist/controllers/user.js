@@ -107,11 +107,15 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = user.id;
     const rol = user.rol;
     // generamos token
+    const secretKey = process.env.SECRET_KEY;
+    if (!secretKey) {
+        throw new Error("La clave secreta (SECRET_KEY) no está definida en el entorno");
+    }
     const token = jsonwebtoken_1.default.sign({
         username: username,
         rol: rol,
         id: id
-    }, process.env.SECRET_KEY || 'admin');
+    }, secretKey, { expiresIn: '1h' });
     res.json(token);
 });
 exports.loginUser = loginUser;
