@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changePassword = exports.deleteUser = exports.updateUser = exports.getUserByUsername = exports.getAllUser = exports.loginUser = exports.newUser = void 0;
+exports.createDefaultUser = exports.changePassword = exports.deleteUser = exports.updateUser = exports.getUserByUsername = exports.getAllUser = exports.loginUser = exports.newUser = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const user_1 = require("../models/user");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const connection_1 = __importDefault(require("../db/connection"));
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = req.body;
     // verificar si exite el usuario
@@ -270,3 +271,35 @@ const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.changePassword = changePassword;
+const createDefaultUser = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield connection_1.default.sync(); // Asegúrate de que la base de datos esté sincronizada
+        // Verifica si ya existe el usuario por defecto
+        const userExists = yield user_1.User.findOne({ where: { identificacion: 99999 } });
+        const hastedpassword = yield bcryptjs_1.default.hash("defaultPassword", 10);
+        if (!userExists) {
+            // Crea el usuario por defecto
+            yield user_1.User.create({
+                username: 'defaultUser',
+                password: hastedpassword,
+                primer_nombre: 'Default',
+                segundo_nombre: 'User',
+                primer_apellido: 'Default',
+                segundo_apellido: 'User',
+                email: 'defaultuser@example.com',
+                tipo_identificacion: 'DNI',
+                identificacion: 99999,
+                sexo: 'M',
+                rol: 'admin',
+            });
+            console.log('Usuario por defecto creado exitosamente.');
+        }
+        else {
+            console.log('El usuario por defecto ya existe.');
+        }
+    }
+    catch (error) {
+        console.error('Error al crear el usuario por defecto:', error);
+    }
+});
+exports.createDefaultUser = createDefaultUser;

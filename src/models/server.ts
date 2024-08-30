@@ -6,8 +6,12 @@
  import routesSesion from '../routes/sesion';
  import routesReporte from '../routes/reportesUser';
 
+
 import  cors  from "cors";
 import  { Answer, Career, Question, User }  from './associations';
+
+import { createDefaultUser } from '../controllers/user'; // Ajusta la importación según tu estructura
+
 
 
  class Server{
@@ -55,8 +59,7 @@ import  { Answer, Career, Question, User }  from './associations';
             await Question.sync();
             await Answer.sync();
             
-            
-
+            await createDefaultUser();
         }catch(error){
             console.log('Problem connecting to the database ' , error);
         }

@@ -21,6 +21,7 @@ const sesion_1 = __importDefault(require("../routes/sesion"));
 const reportesUser_1 = __importDefault(require("../routes/reportesUser"));
 const cors_1 = __importDefault(require("cors"));
 const associations_1 = require("./associations");
+const user_2 = require("../controllers/user"); // Ajusta la importación según tu estructura
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -56,6 +57,7 @@ class Server {
                 yield associations_1.User.sync();
                 yield associations_1.Question.sync();
                 yield associations_1.Answer.sync();
+                yield (0, user_2.createDefaultUser)();
             }
             catch (error) {
                 console.log('Problem connecting to the database ', error);

@@ -53,7 +53,7 @@ exports.User = connection_1.default.define('User', {
         allowNull: false
     },
     rol: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.ENUM('user', 'admin'),
         defaultValue: 'user',
     },
 });

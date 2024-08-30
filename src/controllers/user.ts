@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import  bcrypt  from 'bcryptjs';
 import { IUser, User } from "../models/user";
 import  jwt from "jsonwebtoken";
+import sequelize from "../db/connection";
 
 export const newUser = async(req: Request, res: Response) => {
 
@@ -311,4 +312,37 @@ export const changePassword = async (req: Request, res: Response) => {
       });
     }
   };
+
+export  const createDefaultUser = async () => {
+    try {
+      await sequelize.sync(); // Asegúrate de que la base de datos esté sincronizada
   
+      // Verifica si ya existe el usuario por defecto
+      const userExists = await User.findOne({ where: { identificacion: 99999 } });
+
+      const hastedpassword = await bcrypt.hash("defaultPassword",10);
+  
+      if (!userExists) {
+        // Crea el usuario por defecto
+        await User.create({
+          username: 'defaultUser',
+          password: hastedpassword, 
+          primer_nombre: 'Default',
+          segundo_nombre: 'User',
+          primer_apellido: 'Default',
+          segundo_apellido: 'User',
+          email: 'defaultuser@example.com',
+          tipo_identificacion: 'DNI',
+          identificacion: 99999,
+          sexo: 'M',
+          rol: 'admin', 
+        });
+  
+        console.log('Usuario por defecto creado exitosamente.');
+      } else {
+        console.log('El usuario por defecto ya existe.');
+      }
+    } catch (error) {
+      console.error('Error al crear el usuario por defecto:', error);
+    }
+  };
